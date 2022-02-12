@@ -1,4 +1,4 @@
-from model import User
+from dao.model.user import User
 
 
 class UserDAO:

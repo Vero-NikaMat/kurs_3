@@ -3,7 +3,7 @@ import hashlib
 import hmac
 
 from constants import PWD_HASH_ITERATIONS, PWD_HASH_SALT
-from app.dao.user import UserDAO
+from dao.user import UserDAO
 
 class UserService:
     def __init__(self, dao: UserDAO):
