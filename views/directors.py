@@ -1,3 +1,4 @@
+from flask import request
 from flask_restx import Resource, Namespace
 
 from dao.model.director import DirectorSchema
@@ -12,6 +13,11 @@ class DirectorsView(Resource):
         rs = director_service.get_all()
         res = DirectorSchema(many=True).dump(rs)
         return res, 200
+
+    def post(self):
+        req_json = request.json
+        director = director_service.create(req_json)
+        return "", 201, {"location": f"/directors/{director.id}"}
 
 
 @director_ns.route('/<int:rid>')

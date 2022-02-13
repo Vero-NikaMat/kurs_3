@@ -42,10 +42,6 @@ def create_data(app, db):
             db.session.add_all([u1, u2, u3])
 
 
-def get_hash(self):
-    return hashlib.md5(self.password.encode('utf-8')).hexdigest()
-
-
 if __name__ == '__main__':
     app = create_app(Config())
     app.debug = True

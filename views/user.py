@@ -35,6 +35,6 @@ class UserView(Resource):
 
 
     def get(self, rid):
-        r = db.session.query(User).get(rid)
+        r = user_service.get_one(rid)
         sm_d = UserSchema().dump(r)
         return sm_d, 200
