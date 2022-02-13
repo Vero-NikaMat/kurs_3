@@ -11,6 +11,7 @@ from views.auth import auth_ns
 from views.user import user_ns
 from dao.model.user import User
 
+
 def create_app(config_object):
     app = Flask(__name__)
     app.config.from_object(config_object)
@@ -32,6 +33,7 @@ def register_extensions(app):
 
 def create_data(app, db):
     with app.app_context():
+        db.drop_all()
         db.create_all()
 
         u1 = User(username="vasya", password="my_little_pony", role="user")

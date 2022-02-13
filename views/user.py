@@ -1,8 +1,6 @@
 from flask import request
 
-from helpers.decorators import admin_required
-from setup_db import db
-
+from helpers.decorators import admin_required, auth_required
 
 from flask_restx import Resource, Namespace
 from dao.model.user import UserSchema
@@ -24,7 +22,8 @@ class UsersView(Resource):
         req_json = request.json
         user = user_service.create(req_json)
 
-        return "", 201, {"location": f"/users/{user.id}"}
+        return {"location": f"/users/{user.id}"}, 201
+
 
 @user_ns.route('/<int:uid>')
 class UserView(Resource):
@@ -33,7 +32,7 @@ class UserView(Resource):
         user_service.delete(uid)
         return "", 204
 
-
+    @auth_required
     def get(self, rid):
         r = user_service.get_one(rid)
         sm_d = UserSchema().dump(r)

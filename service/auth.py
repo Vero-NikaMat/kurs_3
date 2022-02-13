@@ -7,10 +7,10 @@ from flask_restx import abort
 from constants import JWT_SECRET, JWT_ALGORITHM
 
 class AuthService:
-    def __init__(self, user_service, UserService):
+    def __init__(self, user_service):
         self.user_service = user_service
 
-    def generate_tokens(self):
+    def generate_tokens(self, username, password):
         user = self.user_service.get_by_username(username)
 
         if user is None:
