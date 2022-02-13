@@ -12,6 +12,7 @@ user_ns = Namespace('users')
 
 @user_ns.route('/')
 class UsersView(Resource):
+    @auth_required
     def get(self):
         all_users = user_service.get_all()
         res = UserSchema(many=True).dump(all_users)
