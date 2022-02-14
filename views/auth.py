@@ -1,5 +1,7 @@
 from flask import request
 from flask_restx import Resource, Namespace
+
+from implemented import user_service
 from service.auth import AuthService
 
 auth_ns = Namespace('auth')
@@ -14,7 +16,7 @@ class AuthView(Resource):
         if None in [username, password]:
             return "", 400
 
-        tokens = AuthService.generate_tokens(username, password)
+        tokens = AuthService(user_service).generate_tokens(username=username, password=password)
         return tokens, 201
 
 

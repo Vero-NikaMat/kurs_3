@@ -16,7 +16,7 @@ class DirectorsView(Resource):
         res = DirectorSchema(many=True).dump(rs)
         return res, 200
 
-
+    @admin_required
     def post(self):
         req_json = request.json
         director = director_service.create(req_json)
@@ -31,6 +31,7 @@ class DirectorView(Resource):
         sm_d = DirectorSchema().dump(r)
         return sm_d, 200
 
+    @admin_required
     def put(self, did):
         req_json = request.json
         if "id" not in req_json:
