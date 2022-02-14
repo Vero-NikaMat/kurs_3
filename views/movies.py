@@ -24,6 +24,7 @@ class MoviesView(Resource):
         res = MovieSchema(many=True).dump(all_movies)
         return res, 200
 
+    @admin_required
     def post(self):
         req_json = request.json
         movie = movie_service.create(req_json)
@@ -38,6 +39,7 @@ class MovieView(Resource):
         sm_d = MovieSchema().dump(b)
         return sm_d, 200
 
+    @admin_required
     def put(self, bid):
         req_json = request.json
         if "id" not in req_json:
