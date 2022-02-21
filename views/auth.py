@@ -9,7 +9,7 @@ auth_ns = Namespace('auth')
 @auth_ns.route("/")
 class AuthView(Resource):
     def post(self):
-        data = request.json
+        data = request.form
         username = data.get("username", None)
         password = data.get("password", None)
 

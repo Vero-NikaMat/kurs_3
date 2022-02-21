@@ -3,11 +3,14 @@ from flask_restx import Api
 import hashlib
 
 from config import Config
+from implemented import user_service
+from service.user import UserService
 from setup_db import db
 from views.directors import director_ns
 from views.genres import genre_ns
 from views.movies import movie_ns
 from views.auth import auth_ns
+from views.register import register_ns
 from views.user import user_ns
 from dao.model.user import User
 
@@ -17,7 +20,7 @@ def create_app(config_object):
     app.config.from_object(config_object)
     app.app_context().push()
     register_extensions(app)
-    create_data(app, db)
+    # create_data(app, db)
     return app
 
 
@@ -29,6 +32,7 @@ def register_extensions(app):
     api.add_namespace(movie_ns)
     api.add_namespace(auth_ns)
     api.add_namespace(user_ns)
+    api.add_namespace(register_ns)
 
 
 def create_data(app, db):
@@ -36,9 +40,9 @@ def create_data(app, db):
         # db.drop_all()
         db.create_all()
 
-        u1 = User(username="vasya", password="my_little_pony", role="user")
-        u2 = User(username="oleg", password="qwerty", role="user")
-        u3 = User(username="oleg", password="P@ssw0rd", role="admin")
+        u1 = User(username="vasya", password=UserService(user_service).make_user_password_hash("my_little_pony"), role="user")
+        u2 = User(username="oleg", password=UserService(user_service).make_user_password_hash("qwerty"), role="user")
+        u3 = User(username="oleg", password=UserService(user_service).make_user_password_hash("P@ssw0rd"), role="admin")
 
         with db.session.begin():
             db.session.add_all([u1, u2, u3])
