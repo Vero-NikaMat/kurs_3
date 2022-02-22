@@ -10,13 +10,13 @@ auth_ns = Namespace('auth')
 class AuthView(Resource):
     def post(self):
         data = request.form
-        username = data.get("username", None)
+        email = data.get("email", None)
         password = data.get("password", None)
 
-        if None in [username, password]:
+        if None in [email, password]:
             return "", 400
 
-        tokens = AuthService(user_service).generate_tokens(username=username, password=password)
+        tokens = AuthService(user_service).generate_tokens(email=email, password=password)
         return tokens, 201
 
 
