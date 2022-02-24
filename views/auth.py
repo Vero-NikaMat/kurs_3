@@ -1,10 +1,13 @@
-from flask import request
+from flask import request, abort
 from flask_restx import Resource, Namespace
 
 from implemented import user_service
 from service.auth import AuthService
+from service.user import UserService
+from setup_db import db
 
 auth_ns = Namespace('auth')
+
 
 @auth_ns.route("/")
 class AuthView(Resource):
@@ -16,8 +19,12 @@ class AuthView(Resource):
         if None in [email, password]:
             return "", 400
 
-        tokens = AuthService(user_service).generate_tokens(email=email, password=password)
-        return tokens, 201
+        user = UserService(db.session).get_item_by_email(email=email)
+        if user.password == password:
+            tokens = AuthService(user_service).generate_tokens(email=email, password=password)
+            return tokens, 201
+        else:
+            return "", 400
 
 
     def put(self):

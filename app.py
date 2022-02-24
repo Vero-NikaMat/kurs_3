@@ -20,7 +20,7 @@ def create_app(config_object):
     app.config.from_object(config_object)
     app.app_context().push()
     register_extensions(app)
-    create_data(app, db)
+    # create_data(app, db)
     return app
 
 

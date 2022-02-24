@@ -33,5 +33,7 @@ class UserDAO:
         user.surname = user_d.get("surname")
         user.favorite_genre = user_d.get("favorite_genre")
 
-        self.session.add(user)
-        self.session.commit()
+    def get_by_email(self, email):
+        return self.session.query(User).filter(User.email == email).first()
+
+

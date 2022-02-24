@@ -3,6 +3,10 @@ from flask_restx import Resource, Namespace
 
 from setup_db import db
 
+from service.user import UserService
+from implemented import user_service
+from dao.model.user import User
+
 register_ns = Namespace('register')
 
 
@@ -20,11 +24,9 @@ class RegisterView(Resource):
         if None in [name, password]:
             return "", 400
 
-        from service.user import UserService
-        from implemented import user_service
+
         generate_password = UserService(user_service).make_user_password_hash(password)
 
-        from dao.model.user import User
         u1 = User(email=email, name=name, password=generate_password, surname=surname, favorite_genre=favorite_genre )
         with db.session.begin():
             db.session.add_all([u1])

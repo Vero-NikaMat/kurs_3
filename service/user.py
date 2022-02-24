@@ -30,6 +30,9 @@ class UserService:
     def delete(self, rid):
         self.dao.delete(rid)
 
+    def get_by_email(self, email):
+        return self.dao.get_by_email(email)
+
     def make_user_password_hash(self, password):
         # generate_password
         hash_ = hashlib.pbkdf2_hmac(

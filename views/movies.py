@@ -12,6 +12,8 @@ movie_ns = Namespace('movies')
 class MoviesView(Resource):
     @auth_required
     def get(self):
+        #request.args.get(‘status’)
+
         director = request.args.get("director_id")
         genre = request.args.get("genre_id")
         year = request.args.get("year")
