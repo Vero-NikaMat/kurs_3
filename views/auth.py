@@ -19,9 +19,9 @@ class AuthView(Resource):
         if None in [email, password]:
             return "", 400
 
-        user = UserService(db.session).get_item_by_email(email=email)
+        user = UserService(db.session).get_by_email(email=email)
         if user.password == password:
-            tokens = AuthService(user_service).generate_tokens(email=email, password=password)
+            tokens = AuthService(user_service).generate_tokens(name=user.name, password=password)
             return tokens, 201
         else:
             return "", 400
