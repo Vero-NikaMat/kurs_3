@@ -1,6 +1,7 @@
 from flask import request
 from flask_restx import Resource, Namespace
 
+from service.auth import AuthService
 from setup_db import db
 
 from service.user import UserService
@@ -31,4 +32,11 @@ class RegisterView(Resource):
         with db.session.begin():
             db.session.add_all([u1])
 
-        return "user create", 200
+        if u1:
+            tokens = AuthService(user_service).generate_tokens(name=name, password=password)
+            return tokens, 201
+        else:
+            return "", 400
+
+
+

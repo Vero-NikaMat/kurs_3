@@ -53,7 +53,7 @@ class UserView(Resource):
         if user.password == password1:
             user.password = UserService(user_service).make_user_password_hash(password2)
             user_service.update(user)
-            tokens = AuthService(user_service).generate_tokens(email=user.email, password=password2)
+            tokens = AuthService(user_service).generate_tokens(name=user.name, password=password2)
             return tokens, 201
         else:
             return "", 400
